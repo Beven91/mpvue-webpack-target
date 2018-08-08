@@ -3,14 +3,30 @@
   Author Tobias Koppers @sokra
 */
 "use strict";
-
+const { SyncWaterfallHook } = require("tapable");
 const Template = require("webpack/lib/Template");
 
 class JsonpMainTemplatePlugin {
 
   apply(mainTemplate) {
-    mainTemplate.plugin("local-vars", function(source, chunk) {
-      if(chunk.chunks.length > 0) {
+    ["jsonpScript", "linkPreload", "linkPrefetch"].forEach(hook => {
+			if (!mainTemplate.hooks[hook]) {
+				mainTemplate.hooks[hook] = new SyncWaterfallHook([
+					"source",
+					"chunk",
+					"hash"
+				]);
+			}
+    });
+    const needChunkLoadingCode = chunk => {
+			for (const chunkGroup of chunk.groupsIterable) {
+				if (chunkGroup.chunks.length > 1) return true;
+				if (chunkGroup.getNumberOfChildren() > 0) return true;
+			}
+			return false;
+		};
+    mainTemplate.hooks.localVars.tap("local-vars", function(source, chunk) {
+      if(needChunkLoadingCode(chunk)) {
         return this.asString([
           source,
           "",
@@ -24,7 +40,7 @@ class JsonpMainTemplatePlugin {
       }
       return source;
     });
-    mainTemplate.plugin("jsonp-script", function(_, chunk, hash) {
+    mainTemplate.hooks.jsonpScript.tap("jsonp-script", function(_, chunk, hash) {
       const chunkFilename = this.outputOptions.chunkFilename;
       const chunkMaps = chunk.getChunkMaps();
       const crossOriginLoading = this.outputOptions.crossOriginLoading;
@@ -77,7 +93,7 @@ class JsonpMainTemplatePlugin {
         "};",
       ]);
     });
-    mainTemplate.plugin("require-ensure", function(_, chunk, hash) {
+    mainTemplate.hooks.requireEnsure.tap("require-ensure", function(_, chunk, hash) {
       return this.asString([
         "var installedChunkData = installedChunks[chunkId];",
         "if(installedChunkData === 0) {",
@@ -109,8 +125,8 @@ class JsonpMainTemplatePlugin {
         "return promise;"
       ]);
     });
-    mainTemplate.plugin("require-extensions", function(source, chunk) {
-      if(chunk.chunks.length === 0) return source;
+    mainTemplate.hooks.requireExtensions.tap("require-extensions", function(source, chunk) {
+      if(!needChunkLoadingCode(chunk)) return source;
 
       return this.asString([
         source,
@@ -119,8 +135,8 @@ class JsonpMainTemplatePlugin {
         `${this.requireFn}.oe = function(err) { console.error(err); throw err; };`
       ]);
     });
-    mainTemplate.plugin("bootstrap", function(source, chunk, hash) {
-      if(chunk.chunks.length > 0) {
+    mainTemplate.hooks.bootstrap.tap("bootstrap", function(source, chunk, hash) {
+      if(needChunkLoadingCode(chunk)) {
         var jsonpFunction = this.outputOptions.jsonpFunction;
         return this.asString([
           source,
@@ -168,7 +184,7 @@ class JsonpMainTemplatePlugin {
       }
       return source;
     });
-    mainTemplate.plugin("hot-bootstrap", function(source, chunk, hash) {
+    mainTemplate.hooks.hotBootstrap.tap("hot-bootstrap", function(source, chunk, hash) {
       const hotUpdateChunkFilename = this.outputOptions.hotUpdateChunkFilename;
       const hotUpdateMainFilename = this.outputOptions.hotUpdateMainFilename;
       const hotUpdateFunction = this.outputOptions.hotUpdateFunction;
@@ -199,10 +215,10 @@ this[${JSON.stringify(hotUpdateFunction)}] = ${runtimeSource}`;
     mainTemplate.plugin("hash", function(hash) {
       hash.update("jsonp");
       hash.update("4");
-      hash.update(`${this.outputOptions.filename}`);
-      hash.update(`${this.outputOptions.chunkFilename}`);
-      hash.update(`${this.outputOptions.jsonpFunction}`);
-      hash.update(`${this.outputOptions.hotUpdateFunction}`);
+      hash.update(`${mainTemplate.outputOptions.filename}`);
+      hash.update(`${mainTemplate.outputOptions.chunkFilename}`);
+      hash.update(`${mainTemplate.outputOptions.jsonpFunction}`);
+      hash.update(`${mainTemplate.outputOptions.hotUpdateFunction}`);
     });
   }
 }

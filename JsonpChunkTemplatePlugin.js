@@ -23,8 +23,8 @@ class JsonpChunkTemplatePlugin {
     chunkTemplate.plugin("hash", function(hash) {
       hash.update("JsonpChunkTemplatePlugin");
       hash.update("3");
-      hash.update(`${this.outputOptions.jsonpFunction}`);
-      hash.update(`${this.outputOptions.library}`);
+      hash.update(`${chunkTemplate.outputOptions.jsonpFunction}`);
+      hash.update(`${chunkTemplate.outputOptions.library}`);
     });
   }
 }

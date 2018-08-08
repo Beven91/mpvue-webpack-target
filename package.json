@@ -1,5 +1,5 @@
 {
-  "name": "mpvue-webpack-target",
+  "name": "mpvue-webpack-target-webpack4",
   "version": "1.0.1",
   "description": "为 webpack 专门增加的微信小程序的 target",
   "main": "index.js",
@@ -13,6 +13,6 @@
   "author": "anchengjian <anchengjian@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^3.4.0"
+    "webpack": "^4.0.0"
   }
 }
