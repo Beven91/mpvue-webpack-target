@@ -8,9 +8,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:mpvue/mpvue-webpack-target.git"
+    "url": "git@github.com:Beven91/mpvue-webpack-target.git"
   },
-  "author": "anchengjian <anchengjian@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "webpack": "^4.0.0"
