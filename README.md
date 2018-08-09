@@ -1,5 +1,7 @@
 # mpvue-webpack-target
 
+`临时兼容到webpack4`
+
 为 webpack 专门增加的小程序的 target。  
 
 关于 [target](https://doc.webpack-china.org/configuration/target/)。  

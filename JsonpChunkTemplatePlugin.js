@@ -9,7 +9,7 @@ const ConcatSource = require("webpack-sources").ConcatSource;
 class JsonpChunkTemplatePlugin {
   apply(chunkTemplate) {
     chunkTemplate.plugin("render", function(modules, chunk) {
-      const jsonpFunction = this.outputOptions.jsonpFunction;
+      const jsonpFunction = chunkTemplate.outputOptions.jsonpFunction;
       const source = new ConcatSource();
       source.add(`global.${jsonpFunction}(${JSON.stringify(chunk.ids)},`);
       source.add(modules);

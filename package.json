@@ -1,17 +1,50 @@
 {
-  "name": "mpvue-webpack-target-webpack4",
-  "version": "1.0.1",
+  "_from": "mpvue-webpack-target-webpack4@^1.0.0",
+  "_id": "mpvue-webpack-target-webpack4@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-5+3VYMA+8tic3gfaIg2+RkQqqp0=",
+  "_location": "/mpvue-webpack-target-webpack4",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "mpvue-webpack-target-webpack4@^1.0.0",
+    "name": "mpvue-webpack-target-webpack4",
+    "escapedName": "mpvue-webpack-target-webpack4",
+    "rawSpec": "^1.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.0"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/mpvue-webpack-target-webpack4/download/mpvue-webpack-target-webpack4-1.0.1.tgz",
+  "_shasum": "e7edd560c03ef2d89cde07da220dbe46442aaa9d",
+  "_spec": "mpvue-webpack-target-webpack4@^1.0.0",
+  "_where": "/Users/beven/Personal/ireeder-frontend",
+  "author": {
+    "name": "anchengjian",
+    "email": "anchengjian@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/mpvue/mpvue-webpack-target/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "为 webpack 专门增加的微信小程序的 target",
+  "devDependencies": {
+    "webpack": "^4.0.0"
+  },
+  "homepage": "https://github.com/mpvue/mpvue-webpack-target#readme",
+  "license": "MIT",
   "main": "index.js",
+  "name": "mpvue-webpack-target-webpack4",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mpvue/mpvue-webpack-target.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Beven91/mpvue-webpack-target.git"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "webpack": "^4.0.0"
-  }
+  "version": "1.1.0"
 }
