@@ -5,6 +5,7 @@ const LoaderTargetPlugin = require("webpack/lib/LoaderTargetPlugin");
 
 module.exports = function (compiler) {
   const { options } = compiler
+  compiler.plugin('emit', require('./applyDll').emitHandle);
   compiler.apply(
     new JsonpTemplatePlugin(options.output),
     new FunctionModulePlugin(options.output),

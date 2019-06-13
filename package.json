@@ -35,6 +35,10 @@
   "devDependencies": {
     "webpack": "^4.0.0"
   },
+  "dependencies": {
+    "relative": "^3.0.2",
+    "upath": "^1.1.0"
+  },
   "homepage": "https://github.com/mpvue/mpvue-webpack-target#readme",
   "license": "MIT",
   "main": "index.js",
@@ -46,5 +50,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.1.1"
+  "version": "1.1.2"
 }
